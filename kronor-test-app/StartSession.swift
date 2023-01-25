@@ -73,6 +73,12 @@ func createPaymentSession(amount: Double) async throws -> Result<String, APIErro
     let idempotency = UUID().uuidString
     
     let input = KronorApi.PaymentSessionInput(
+        additionalData: .some(KronorApi.PaymentSessionAdditionalData(
+            email: "fancy@icloud.com",
+            ip: "127.0.0.1",
+            language: GraphQLEnum(KronorApi.Language.sv),
+            name: "Fancy iPhone Owner"
+        )),
         amount: Int(amount * 100),
         expiresAt: expiry.ISO8601Format(),
         idempotencyKey: idempotency,
