@@ -14,6 +14,8 @@ enum PaymentMethod: String, Identifiable {
     case swish
     case mobilepay
     case creditcard
+    case paypal
+    case fallback
     
     var id: PaymentMethod { self }
 }
@@ -32,15 +34,15 @@ struct ContentView: View {
         VStack {
             Spacer()
 
-            if sessionToken == nil || payment != nil {
+            if sessionToken == nil {
                 StartSession(sessionToken: $sessionToken) {
                     payment = nil
                 }
-
-                if let payment {
-                    Spacer()
-                    Text("previous payment: \(payment)")
-                }
+            }
+            
+            if let payment {
+                Spacer()
+                Text("previous payment: \(payment)")
             }
             
             if sessionToken != nil && paymentMethod == .unselected {
@@ -49,6 +51,8 @@ struct ContentView: View {
                     Text("Swish").tag(PaymentMethod.swish)
                     Text("MobilePay").tag(PaymentMethod.mobilepay)
                     Text("Credit Card").tag(PaymentMethod.creditcard)
+                    Text("PayPal").tag(PaymentMethod.paypal)
+                    Text("Fallback (Swish)").tag(PaymentMethod.fallback)
                 })
             }
 
@@ -61,7 +65,7 @@ struct ContentView: View {
                     SwishComponent(
                         env: .sandbox,
                         sessionToken: sessionToken,
-                        returnURL: URL(string: "https://google.com")!,
+                        returnURL: URL(string: "io.kronortest://")!,
                         onPaymentFailure: {
                             self.sessionToken = nil
                             payment = "failed"
@@ -76,7 +80,7 @@ struct ContentView: View {
                     MobilePayComponent(
                         env: .sandbox,
                         sessionToken: sessionToken,
-                        returnURL: URL(string: "https://google.com")!,
+                        returnURL: URL(string: "io.kronortest://dummy")!,
                         onPaymentFailure: {
                             self.sessionToken = nil
                             self.paymentMethod = .unselected
@@ -91,7 +95,38 @@ struct ContentView: View {
                     CreditCardComponent(
                         env: .sandbox,
                         sessionToken: sessionToken,
-                        returnURL: URL(string: "https://google.com")!,
+                        returnURL: URL(string: "io.kronortest://dummy")!,
+                        onPaymentFailure: {
+                            self.sessionToken = nil
+                            self.paymentMethod = .unselected
+                            payment = "failed"
+                        },
+                        onPaymentSuccess: {paymentId in
+                            self.sessionToken = nil
+                            payment = paymentId
+                        }
+                    )
+                case .paypal:
+                    PayPalComponent(
+                        env: .sandbox,
+                        sessionToken: sessionToken,
+                        returnURL: URL(string: "io.kronortest://")!,
+                        onPaymentFailure: {
+                            self.sessionToken = nil
+                            self.paymentMethod = .unselected
+                            payment = "failed"
+                        },
+                        onPaymentSuccess: {paymentId in
+                            self.sessionToken = nil
+                            payment = paymentId
+                        }
+                    )
+                case .fallback:
+                    FallbackComponent(
+                        env: .sandbox,
+                        sessionToken: sessionToken,
+                        paymentMethodName: "swish",
+                        returnURL: URL(string: "io.kronortest://dummy")!,
                         onPaymentFailure: {
                             self.sessionToken = nil
                             self.paymentMethod = .unselected
