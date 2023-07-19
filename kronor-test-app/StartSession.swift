@@ -115,7 +115,7 @@ func createPaymentSession(amount: Double, currency: KronorApi.SupportedCurrencyE
         currency: .some(GraphQLEnum.case(currency)),
         expiresAt: expiry.ISO8601Format(),
         idempotencyKey: idempotency,
-        merchantReference: "ios-reference",
+        merchantReference: String("ios-\(Date().timeIntervalSinceReferenceDate)"),
         message: "test payment"
     )
 

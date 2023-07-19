@@ -110,7 +110,7 @@ struct ContentView: View {
                     PayPalComponent(
                         env: .sandbox,
                         sessionToken: sessionToken,
-                        returnURL: URL(string: "io.kronortest://")!,
+                        returnURL: URL(string: "io.kronortest://dummy")!,
                         onPaymentFailure: {
                             self.sessionToken = nil
                             self.paymentMethod = .unselected
