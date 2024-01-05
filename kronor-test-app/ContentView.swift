@@ -15,6 +15,7 @@ enum PaymentMethod: String, Identifiable {
     case mobilepay
     case creditcard
     case paypal
+    case vipps
     case fallback
     
     var id: PaymentMethod { self }
@@ -52,6 +53,7 @@ struct ContentView: View {
                     Text("MobilePay").tag(PaymentMethod.mobilepay)
                     Text("Credit Card").tag(PaymentMethod.creditcard)
                     Text("PayPal").tag(PaymentMethod.paypal)
+                    Text("Vipps").tag(PaymentMethod.vipps)
                     Text("Fallback (Swish)").tag(PaymentMethod.fallback)
                 })
             }
@@ -66,9 +68,9 @@ struct ContentView: View {
                         env: .sandbox,
                         sessionToken: sessionToken,
                         returnURL: URL(string: "io.kronortest://")!,
-                        onPaymentFailure: {
+                        onPaymentFailure: {reason in 
                             self.sessionToken = nil
-                            payment = "failed"
+                            payment = "failed: \(reason)"
                         },
                         onPaymentSuccess: {paymentId in
                             self.sessionToken = nil
@@ -81,10 +83,10 @@ struct ContentView: View {
                         env: .sandbox,
                         sessionToken: sessionToken,
                         returnURL: URL(string: "io.kronortest://dummy")!,
-                        onPaymentFailure: {
+                        onPaymentFailure: {reason in 
                             self.sessionToken = nil
                             self.paymentMethod = .unselected
-                            payment = "failed"
+                            payment = "failed \(reason)"
                         },
                         onPaymentSuccess: {paymentId in
                             self.sessionToken = nil
@@ -96,10 +98,10 @@ struct ContentView: View {
                         env: .sandbox,
                         sessionToken: sessionToken,
                         returnURL: URL(string: "io.kronortest://dummy")!,
-                        onPaymentFailure: {
+                        onPaymentFailure: {reason in 
                             self.sessionToken = nil
                             self.paymentMethod = .unselected
-                            payment = "failed"
+                            payment = "failed \(reason)"
                         },
                         onPaymentSuccess: {paymentId in
                             self.sessionToken = nil
@@ -111,10 +113,25 @@ struct ContentView: View {
                         env: .sandbox,
                         sessionToken: sessionToken,
                         returnURL: URL(string: "io.kronortest://dummy")!,
-                        onPaymentFailure: {
+                        onPaymentFailure: {reason in 
                             self.sessionToken = nil
                             self.paymentMethod = .unselected
-                            payment = "failed"
+                            payment = "failed \(reason)"
+                        },
+                        onPaymentSuccess: {paymentId in
+                            self.sessionToken = nil
+                            payment = paymentId
+                        }
+                    )
+                case .vipps:
+                    VippsComponent(
+                        env: .production,
+                        sessionToken: sessionToken,
+                        returnURL: URL(string: "io.kronortest://dummy")!,
+                        onPaymentFailure: {reason in 
+                            self.sessionToken = nil
+                            self.paymentMethod = .unselected
+                            payment = "failed \(reason)"
                         },
                         onPaymentSuccess: {paymentId in
                             self.sessionToken = nil
@@ -127,10 +144,10 @@ struct ContentView: View {
                         sessionToken: sessionToken,
                         paymentMethodName: "swish",
                         returnURL: URL(string: "io.kronortest://dummy")!,
-                        onPaymentFailure: {
+                        onPaymentFailure: {reason in 
                             self.sessionToken = nil
                             self.paymentMethod = .unselected
-                            payment = "failed"
+                            payment = "failed \(reason)"
                         },
                         onPaymentSuccess: {paymentId in
                             self.sessionToken = nil

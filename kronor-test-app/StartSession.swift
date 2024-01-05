@@ -26,10 +26,10 @@ struct StartSession: View {
         VStack {
             
             HStack {
-                Label("Amount", systemImage: "dollarsign.circle")
-                TextField("e.g. 100", text: $rawAmount)
+                Label("Amount (minor units)", systemImage: "dollarsign.circle")
+                TextField("e.g. 100 for 1 DKK", text: $rawAmount)
                     .frame(width: 100.0)
-                    .keyboardType(.decimalPad)
+                    .keyboardType(.numberPad)
             }
             .padding()
             
@@ -40,6 +40,7 @@ struct StartSession: View {
                     Text("Sweden").tag(KronorApi.Country.se)
                     Text("Finland").tag(KronorApi.Country.fi)
                     Text("Iceland").tag(KronorApi.Country.is)
+                    Text("Norway").tag(KronorApi.Country.no)
                 }
                 )
             }
@@ -53,13 +54,14 @@ struct StartSession: View {
                     Text("SEK").tag(KronorApi.SupportedCurrencyEnum.sek)
                     Text("EUR").tag(KronorApi.SupportedCurrencyEnum.eur)
                     Text("ISK").tag(KronorApi.SupportedCurrencyEnum.isk)
+                    Text("NOK").tag(KronorApi.SupportedCurrencyEnum.nok)
                     }
                 ).padding(.all)
             }
             
             
             Button(action: {
-                if let amount = Double(rawAmount) {
+                if let amount = Int(rawAmount) {
                     Task {
                         do {
                             let result = try await createPaymentSession(amount: amount, currency: currency, country: country)
@@ -98,7 +100,7 @@ struct StartSession_Previews: PreviewProvider {
     }
 }
 
-func createPaymentSession(amount: Double, currency: KronorApi.SupportedCurrencyEnum, country: KronorApi.Country) async throws -> Result<String, APIError> {
+func createPaymentSession(amount: Int, currency: KronorApi.SupportedCurrencyEnum, country: KronorApi.Country) async throws -> Result<String, APIError> {
     let expiry = Calendar.current.date(byAdding: .hour, value: 23, to: Date())!
     let idempotency = UUID().uuidString
     
@@ -108,9 +110,30 @@ func createPaymentSession(amount: Double, currency: KronorApi.SupportedCurrencyE
             ip: "127.0.0.1",
             language: GraphQLEnum(KronorApi.Language.sv),
             name: "Fancy iPhone Owner",
-            phoneNumber: "+4554367531"
+            orderLines: .some([
+                KronorApi.PurchaseOrderLineInput(
+                   name: "Item 1",
+                   pricePerItem: amount,
+                   quantity: 1,
+                   reference: .some("ref-1"),
+                   taxRate: 0,
+                   totalAmount: amount,
+                   totalTaxAmount: 0
+                )
+            ]),
+            phoneNumber: "+4554367531",
+            shippingAddress: .some(KronorApi.AddressInput(
+                city: "Copenhagen",
+                country: GraphQLEnum.case(country),
+                email: "longemail@longerdomain.com",
+                firstName: "hello",
+                lastName: "world",
+                phoneNumber: "+46740555111",
+                postalCode: "2300",
+                streetAddress: "Peter Bangs Vej 23"
+            ))
         )),
-        amount: Int(amount * 100),
+        amount: amount,
         country: .some(GraphQLEnum.case(country)),
         currency: .some(GraphQLEnum.case(currency)),
         expiresAt: expiry.ISO8601Format(),
