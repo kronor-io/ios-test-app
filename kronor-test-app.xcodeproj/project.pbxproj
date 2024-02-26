@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -19,6 +19,7 @@
 		6468C8A92964765300080343 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6468C8A82964765300080343 /* Client.swift */; };
 		6468C8AB2964811900080343 /* StartSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6468C8AA2964811900080343 /* StartSession.swift */; };
 		6468C8AE29657E1500080343 /* StateMachine in Frameworks */ = {isa = PBXBuildFile; productRef = 6468C8AD29657E1500080343 /* StateMachine */; };
+		6475A4B02B8CD71900A3EE5C /* KronorMerchant in Frameworks */ = {isa = PBXBuildFile; productRef = 6475A4AF2B8CD71900A3EE5C /* KronorMerchant */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,7 @@
 				644A50362966DEF800F8BC7B /* ApolloWebSocket in Frameworks */,
 				645BC0F6297028E4004A97C8 /* KronorComponents in Frameworks */,
 				645BC0F4297028E4004A97C8 /* KronorApi in Frameworks */,
+				6475A4B02B8CD71900A3EE5C /* KronorMerchant in Frameworks */,
 				645BC0F2297028E4004A97C8 /* Kronor in Frameworks */,
 				644A50342966DEF800F8BC7B /* Apollo in Frameworks */,
 				6468C8AE29657E1500080343 /* StateMachine in Frameworks */,
@@ -128,6 +130,7 @@
 				645BC0F1297028E4004A97C8 /* Kronor */,
 				645BC0F3297028E4004A97C8 /* KronorApi */,
 				645BC0F5297028E4004A97C8 /* KronorComponents */,
+				6475A4AF2B8CD71900A3EE5C /* KronorMerchant */,
 			);
 			productName = "kronor-test-app";
 			productReference = 6468C8842964374800080343 /* kronor-test-app.app */;
@@ -161,6 +164,7 @@
 			packageReferences = (
 				6468C8AC29657E1500080343 /* XCRemoteSwiftPackageReference "StateMachine" */,
 				644A50322966DEF800F8BC7B /* XCRemoteSwiftPackageReference "apollo-ios" */,
+				6475A4AE2B8CD71900A3EE5C /* XCLocalSwiftPackageReference "kronor-test-app/KronorMerchant" */,
 			);
 			productRefGroup = 6468C8852964374800080343 /* Products */;
 			projectDirPath = "";
@@ -403,6 +407,13 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		6475A4AE2B8CD71900A3EE5C /* XCLocalSwiftPackageReference "kronor-test-app/KronorMerchant" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "kronor-test-app/KronorMerchant";
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
 		644A50322966DEF800F8BC7B /* XCRemoteSwiftPackageReference "apollo-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -449,6 +460,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6468C8AC29657E1500080343 /* XCRemoteSwiftPackageReference "StateMachine" */;
 			productName = StateMachine;
+		};
+		6475A4AF2B8CD71900A3EE5C /* KronorMerchant */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = KronorMerchant;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

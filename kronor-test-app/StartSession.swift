@@ -6,14 +6,14 @@
 //
 
 import SwiftUI
-import KronorApi
+import KronorMerchant
 
 struct StartSession: View {
     @Binding var sessionToken : String?
     @State var errorText :String?
     @State var rawAmount = ""
-    @State var country = KronorApi.Country.dk
-    @State var currency = KronorApi.SupportedCurrencyEnum.dkk
+    @State var country =  KronorMerchant.Country.dk
+    @State var currency = KronorMerchant.SupportedCurrencyEnum.dkk
 
     var callback: () -> ()
     
@@ -36,11 +36,11 @@ struct StartSession: View {
             HStack {
                 Label("Country", systemImage: "map")
                 Picker("Country", selection: $country, content: {
-                    Text("Denmark").tag(KronorApi.Country.dk)
-                    Text("Sweden").tag(KronorApi.Country.se)
-                    Text("Finland").tag(KronorApi.Country.fi)
-                    Text("Iceland").tag(KronorApi.Country.is)
-                    Text("Norway").tag(KronorApi.Country.no)
+                    Text("Denmark").tag(KronorMerchant.Country.dk)
+                    Text("Sweden").tag(KronorMerchant.Country.se)
+                    Text("Finland").tag(KronorMerchant.Country.fi)
+                    Text("Iceland").tag(KronorMerchant.Country.is)
+                    Text("Norway").tag(KronorMerchant.Country.no)
                 }
                 )
             }
@@ -50,11 +50,11 @@ struct StartSession: View {
             HStack {
                 Label("Currency", systemImage: "coloncurrencysign.circle")
                 Picker("Payment Method", selection: $currency, content: {
-                    Text("DKK").tag(KronorApi.SupportedCurrencyEnum.dkk)
-                    Text("SEK").tag(KronorApi.SupportedCurrencyEnum.sek)
-                    Text("EUR").tag(KronorApi.SupportedCurrencyEnum.eur)
-                    Text("ISK").tag(KronorApi.SupportedCurrencyEnum.isk)
-                    Text("NOK").tag(KronorApi.SupportedCurrencyEnum.nok)
+                    Text("DKK").tag(KronorMerchant.SupportedCurrencyEnum.dkk)
+                    Text("SEK").tag(KronorMerchant.SupportedCurrencyEnum.sek)
+                    Text("EUR").tag(KronorMerchant.SupportedCurrencyEnum.eur)
+                    Text("ISK").tag(KronorMerchant.SupportedCurrencyEnum.isk)
+                    Text("NOK").tag(KronorMerchant.SupportedCurrencyEnum.nok)
                     }
                 ).padding(.all)
             }
@@ -100,18 +100,18 @@ struct StartSession_Previews: PreviewProvider {
     }
 }
 
-func createPaymentSession(amount: Int, currency: KronorApi.SupportedCurrencyEnum, country: KronorApi.Country) async throws -> Result<String, APIError> {
+func createPaymentSession(amount: Int, currency: KronorMerchant.SupportedCurrencyEnum, country: KronorMerchant.Country) async throws -> Result<String, APIError> {
     let expiry = Calendar.current.date(byAdding: .hour, value: 23, to: Date())!
     let idempotency = UUID().uuidString
     
-    let input = KronorApi.PaymentSessionInput(
-        additionalData: .some(KronorApi.PaymentSessionAdditionalData(
+    let input = KronorMerchant.PaymentSessionInput(
+        additionalData: .some(KronorMerchant.PaymentSessionAdditionalData(
             email: "fancy@icloud.com",
             ip: "127.0.0.1",
-            language: GraphQLEnum(KronorApi.Language.sv),
+            language: GraphQLEnum(KronorMerchant.Language.sv),
             name: "Fancy iPhone Owner",
             orderLines: .some([
-                KronorApi.PurchaseOrderLineInput(
+                KronorMerchant.PurchaseOrderLineInput(
                    name: "Item 1",
                    pricePerItem: amount,
                    quantity: 1,
@@ -122,7 +122,7 @@ func createPaymentSession(amount: Int, currency: KronorApi.SupportedCurrencyEnum
                 )
             ]),
             phoneNumber: "+4554367531",
-            shippingAddress: .some(KronorApi.AddressInput(
+            shippingAddress: .some(KronorMerchant.AddressInput(
                 city: "Copenhagen",
                 country: GraphQLEnum.case(country),
                 email: "longemail@longerdomain.com",
@@ -144,7 +144,7 @@ func createPaymentSession(amount: Int, currency: KronorApi.SupportedCurrencyEnum
 
     return try await withCheckedThrowingContinuation {continuation in
         let client = makeGraphQLClientForTestMerchant()
-        client.perform(mutation: KronorApi.NewPaymentSessionMutation(payment: input)) {data in
+        client.perform(mutation: KronorMerchant.NewPaymentSessionMutation(payment: input)) {data in
             switch data {
             case .failure(let error):
                 continuation.resume(throwing: error)

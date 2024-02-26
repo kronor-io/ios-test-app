@@ -1,0 +1,28 @@
+{
+  "schemaName": "KronorMerchant",
+  "input": {
+    "operationSearchPaths": [
+      "**/*.graphql"
+    ],
+    "schemaSearchPaths": [
+      "**/*.graphqls"
+    ]
+  },
+  "output": {
+    "testMocks": {
+      "none": {}
+    },
+    "schemaTypes": {
+      "path": "./KronorMerchant",
+      "moduleType": {
+        "embeddedInTarget": {
+          "name": "KronorMerchant",
+          "accessModifier": "public"
+        }
+      }
+    },
+    "operations": {
+      "inSchemaModule": {}
+    }
+  }
+}
