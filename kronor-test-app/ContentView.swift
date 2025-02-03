@@ -16,6 +16,8 @@ enum PaymentMethod: String, Identifiable {
     case creditcard
     case paypal
     case vipps
+    case bankTransfer
+    case p24
     case fallback
     
     var id: PaymentMethod { self }
@@ -54,6 +56,8 @@ struct ContentView: View {
                     Text("Credit Card").tag(PaymentMethod.creditcard)
                     Text("PayPal").tag(PaymentMethod.paypal)
                     Text("Vipps").tag(PaymentMethod.vipps)
+                    Text("BankTransfer").tag(PaymentMethod.bankTransfer)
+                    Text("P24").tag(PaymentMethod.p24)
                     Text("Fallback (Swish)").tag(PaymentMethod.fallback)
                 })
             }
@@ -130,6 +134,36 @@ struct ContentView: View {
                         returnURL: URL(string: "io.kronortest://dummy")!,
                         onPaymentFailure: {reason in 
                             self.sessionToken = nil
+                            self.paymentMethod = .unselected
+                            payment = "failed \(reason)"
+                        },
+                        onPaymentSuccess: {paymentId in
+                            self.sessionToken = nil
+                            payment = paymentId
+                        }
+                    )
+                case .bankTransfer:
+                    BankTransferComponent(
+                        env: .sandbox,
+                        sessionToken: sessionToken,
+                        returnURL: URL(string: "io.kronortest://dummy")!,
+                        onPaymentFailure: {reason in
+                            self.sessionToken = nil
+                            self.paymentMethod = .unselected
+                            payment = "failed \(reason)"
+                        },
+                        onPaymentSuccess: {paymentId in
+                            self.sessionToken = nil
+                            payment = paymentId
+                        }
+                    )
+                case .p24:
+                    P24Component(
+                        env: .sandbox,
+                        sessionToken: sessionToken,
+                        returnURL: URL(string: "io.kronortest://dummy")!,
+                        onPaymentFailure: {reason in
+                            //self.sessionToken = nil
                             self.paymentMethod = .unselected
                             payment = "failed \(reason)"
                         },

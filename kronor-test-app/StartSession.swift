@@ -41,6 +41,7 @@ struct StartSession: View {
                     Text("Finland").tag(KronorMerchant.Country.fi)
                     Text("Iceland").tag(KronorMerchant.Country.is)
                     Text("Norway").tag(KronorMerchant.Country.no)
+                    Text("Poland").tag(KronorMerchant.Country.pl)
                 }
                 )
             }
@@ -55,6 +56,7 @@ struct StartSession: View {
                     Text("EUR").tag(KronorMerchant.SupportedCurrencyEnum.eur)
                     Text("ISK").tag(KronorMerchant.SupportedCurrencyEnum.isk)
                     Text("NOK").tag(KronorMerchant.SupportedCurrencyEnum.nok)
+                    Text("PLN").tag(KronorMerchant.SupportedCurrencyEnum.pln)
                     }
                 ).padding(.all)
             }
