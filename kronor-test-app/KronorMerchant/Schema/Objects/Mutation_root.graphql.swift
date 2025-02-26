@@ -5,8 +5,9 @@ import ApolloAPI
 
 public extension KronorMerchant.Objects {
   /// mutation root
-  static let Mutation_root = Object(
+  static let Mutation_root = ApolloAPI.Object(
     typename: "mutation_root",
-    implementedInterfaces: []
+    implementedInterfaces: [],
+    keyFields: nil
   )
 }

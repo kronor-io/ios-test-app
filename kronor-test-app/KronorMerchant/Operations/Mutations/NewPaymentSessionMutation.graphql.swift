@@ -6,16 +6,9 @@
 public extension KronorMerchant {
   class NewPaymentSessionMutation: GraphQLMutation {
     public static let operationName: String = "NewPaymentSession"
-    public static let document: ApolloAPI.DocumentType = .notPersisted(
+    public static let operationDocument: ApolloAPI.OperationDocument = .init(
       definition: .init(
-        #"""
-        mutation NewPaymentSession($payment: PaymentSessionInput!) {
-          newPaymentSession(payment: $payment) {
-            __typename
-            token
-          }
-        }
-        """#
+        #"mutation NewPaymentSession($payment: PaymentSessionInput!) { newPaymentSession(payment: $payment) { __typename token } }"#
       ))
 
     public var payment: PaymentSessionInput
@@ -30,7 +23,7 @@ public extension KronorMerchant {
       public let __data: DataDict
       public init(_dataDict: DataDict) { __data = _dataDict }
 
-      public static var __parentType: ApolloAPI.ParentType { KronorMerchant.Objects.Mutation_root }
+      public static var __parentType: any ApolloAPI.ParentType { KronorMerchant.Objects.Mutation_root }
       public static var __selections: [ApolloAPI.Selection] { [
         .field("newPaymentSession", NewPaymentSession.self, arguments: ["payment": .variable("payment")]),
       ] }
@@ -45,7 +38,7 @@ public extension KronorMerchant {
         public let __data: DataDict
         public init(_dataDict: DataDict) { __data = _dataDict }
 
-        public static var __parentType: ApolloAPI.ParentType { KronorMerchant.Objects.PaymentSessionResult }
+        public static var __parentType: any ApolloAPI.ParentType { KronorMerchant.Objects.PaymentSessionResult }
         public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("token", String.self),

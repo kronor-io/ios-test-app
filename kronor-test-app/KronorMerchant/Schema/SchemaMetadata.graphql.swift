@@ -16,8 +16,6 @@ public protocol KronorMerchant_MutableInlineFragment: ApolloAPI.MutableSelection
 where Schema == KronorMerchant.SchemaMetadata {}
 
 public extension KronorMerchant {
-  typealias ID = String
-
   typealias SelectionSet = KronorMerchant_SelectionSet
 
   typealias InlineFragment = KronorMerchant_InlineFragment
@@ -27,12 +25,12 @@ public extension KronorMerchant {
   typealias MutableInlineFragment = KronorMerchant_MutableInlineFragment
 
   enum SchemaMetadata: ApolloAPI.SchemaMetadata {
-    public static let configuration: ApolloAPI.SchemaConfiguration.Type = SchemaConfiguration.self
+    public static let configuration: any ApolloAPI.SchemaConfiguration.Type = SchemaConfiguration.self
 
-    public static func objectType(forTypename typename: String) -> Object? {
+    public static func objectType(forTypename typename: String) -> ApolloAPI.Object? {
       switch typename {
-      case "mutation_root": return KronorMerchant.Objects.Mutation_root
       case "PaymentSessionResult": return KronorMerchant.Objects.PaymentSessionResult
+      case "mutation_root": return KronorMerchant.Objects.Mutation_root
       default: return nil
       }
     }
