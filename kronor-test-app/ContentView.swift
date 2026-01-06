@@ -143,7 +143,7 @@ struct ContentView: View {
                         }
                     )
                 case .bankTransfer:
-                    BankTransferComponent(
+                    TrustlyComponent(
                         env: .sandbox,
                         sessionToken: sessionToken,
                         returnURL: URL(string: "io.kronortest://dummy")!,

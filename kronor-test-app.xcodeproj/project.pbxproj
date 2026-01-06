@@ -7,17 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6418BC442D6F2CAF00D4B02C /* KronorMerchant in Frameworks */ = {isa = PBXBuildFile; productRef = 6418BC432D6F2CAF00D4B02C /* KronorMerchant */; };
-		645BC0F2297028E4004A97C8 /* Kronor in Frameworks */ = {isa = PBXBuildFile; productRef = 645BC0F1297028E4004A97C8 /* Kronor */; };
-		645BC0F4297028E4004A97C8 /* KronorApi in Frameworks */ = {isa = PBXBuildFile; productRef = 645BC0F3297028E4004A97C8 /* KronorApi */; };
-		645BC0F6297028E4004A97C8 /* KronorComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 645BC0F5297028E4004A97C8 /* KronorComponents */; };
 		6468C8882964374800080343 /* kronor_test_appApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6468C8872964374800080343 /* kronor_test_appApp.swift */; };
 		6468C88A2964374800080343 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6468C8892964374800080343 /* ContentView.swift */; };
 		6468C88C2964374900080343 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6468C88B2964374900080343 /* Assets.xcassets */; };
 		6468C88F2964374900080343 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6468C88E2964374900080343 /* Preview Assets.xcassets */; };
 		6468C8A92964765300080343 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6468C8A82964765300080343 /* Client.swift */; };
 		6468C8AB2964811900080343 /* StartSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6468C8AA2964811900080343 /* StartSession.swift */; };
-		6468C8AE29657E1500080343 /* StateMachine in Frameworks */ = {isa = PBXBuildFile; productRef = 6468C8AD29657E1500080343 /* StateMachine */; };
+		64AD68B02F03DDB3000C1E70 /* Kronor in Frameworks */ = {isa = PBXBuildFile; productRef = 64AD68AF2F03DDB3000C1E70 /* Kronor */; };
+		64AD68B22F03DDB6000C1E70 /* KronorApi in Frameworks */ = {isa = PBXBuildFile; productRef = 64AD68B12F03DDB6000C1E70 /* KronorApi */; };
+		64AD68B42F03DDB9000C1E70 /* KronorComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 64AD68B32F03DDB9000C1E70 /* KronorComponents */; };
+		64AD68B62F03DDC0000C1E70 /* StateMachine in Frameworks */ = {isa = PBXBuildFile; productRef = 64AD68B52F03DDC0000C1E70 /* StateMachine */; };
+		64AD68B92F03DE05000C1E70 /* KronorMerchant in Frameworks */ = {isa = PBXBuildFile; productRef = 64AD68B82F03DE05000C1E70 /* KronorMerchant */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,11 +37,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6418BC442D6F2CAF00D4B02C /* KronorMerchant in Frameworks */,
-				645BC0F6297028E4004A97C8 /* KronorComponents in Frameworks */,
-				645BC0F4297028E4004A97C8 /* KronorApi in Frameworks */,
-				645BC0F2297028E4004A97C8 /* Kronor in Frameworks */,
-				6468C8AE29657E1500080343 /* StateMachine in Frameworks */,
+				64AD68B92F03DE05000C1E70 /* KronorMerchant in Frameworks */,
+				64AD68B22F03DDB6000C1E70 /* KronorApi in Frameworks */,
+				64AD68B42F03DDB9000C1E70 /* KronorComponents in Frameworks */,
+				64AD68B62F03DDC0000C1E70 /* StateMachine in Frameworks */,
+				64AD68B02F03DDB3000C1E70 /* Kronor in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,11 +120,11 @@
 			);
 			name = "kronor-test-app";
 			packageProductDependencies = (
-				6468C8AD29657E1500080343 /* StateMachine */,
-				645BC0F1297028E4004A97C8 /* Kronor */,
-				645BC0F3297028E4004A97C8 /* KronorApi */,
-				645BC0F5297028E4004A97C8 /* KronorComponents */,
-				6418BC432D6F2CAF00D4B02C /* KronorMerchant */,
+				64AD68AF2F03DDB3000C1E70 /* Kronor */,
+				64AD68B12F03DDB6000C1E70 /* KronorApi */,
+				64AD68B32F03DDB9000C1E70 /* KronorComponents */,
+				64AD68B52F03DDC0000C1E70 /* StateMachine */,
+				64AD68B82F03DE05000C1E70 /* KronorMerchant */,
 			);
 			productName = "kronor-test-app";
 			productReference = 6468C8842964374800080343 /* kronor-test-app.app */;
@@ -157,7 +157,7 @@
 			mainGroup = 6468C87B2964374800080343;
 			packageReferences = (
 				6468C8AC29657E1500080343 /* XCRemoteSwiftPackageReference "StateMachine" */,
-				6475A4AE2B8CD71900A3EE5C /* XCLocalSwiftPackageReference "kronor-test-app/KronorMerchant" */,
+				64AD68B72F03DE05000C1E70 /* XCLocalSwiftPackageReference "kronor-test-app/KronorMerchant" */,
 			);
 			productRefGroup = 6468C8852964374800080343 /* Products */;
 			projectDirPath = "";
@@ -332,7 +332,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "io.kronor.kronor-test-app-2";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.kronor.kronor-test-app-1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -366,7 +366,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "io.kronor.kronor-test-app-2";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.kronor.kronor-test-app-1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -401,7 +401,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		6475A4AE2B8CD71900A3EE5C /* XCLocalSwiftPackageReference "kronor-test-app/KronorMerchant" */ = {
+		64AD68B72F03DE05000C1E70 /* XCLocalSwiftPackageReference "kronor-test-app/KronorMerchant" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = "kronor-test-app/KronorMerchant";
 		};
@@ -419,27 +419,26 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		6418BC432D6F2CAF00D4B02C /* KronorMerchant */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6475A4AE2B8CD71900A3EE5C /* XCLocalSwiftPackageReference "kronor-test-app/KronorMerchant" */;
-			productName = KronorMerchant;
-		};
-		645BC0F1297028E4004A97C8 /* Kronor */ = {
+		64AD68AF2F03DDB3000C1E70 /* Kronor */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Kronor;
 		};
-		645BC0F3297028E4004A97C8 /* KronorApi */ = {
+		64AD68B12F03DDB6000C1E70 /* KronorApi */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = KronorApi;
 		};
-		645BC0F5297028E4004A97C8 /* KronorComponents */ = {
+		64AD68B32F03DDB9000C1E70 /* KronorComponents */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = KronorComponents;
 		};
-		6468C8AD29657E1500080343 /* StateMachine */ = {
+		64AD68B52F03DDC0000C1E70 /* StateMachine */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 6468C8AC29657E1500080343 /* XCRemoteSwiftPackageReference "StateMachine" */;
 			productName = StateMachine;
+		};
+		64AD68B82F03DE05000C1E70 /* KronorMerchant */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = KronorMerchant;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
