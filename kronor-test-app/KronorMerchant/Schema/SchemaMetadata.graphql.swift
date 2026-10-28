@@ -3,16 +3,16 @@
 
 import ApolloAPI
 
-public protocol KronorMerchant_SelectionSet: ApolloAPI.SelectionSet & ApolloAPI.RootSelectionSet
+nonisolated public protocol KronorMerchant_SelectionSet: ApolloAPI.SelectionSet & ApolloAPI.RootSelectionSet
 where Schema == KronorMerchant.SchemaMetadata {}
 
-public protocol KronorMerchant_InlineFragment: ApolloAPI.SelectionSet & ApolloAPI.InlineFragment
+nonisolated public protocol KronorMerchant_InlineFragment: ApolloAPI.SelectionSet & ApolloAPI.InlineFragment
 where Schema == KronorMerchant.SchemaMetadata {}
 
-public protocol KronorMerchant_MutableSelectionSet: ApolloAPI.MutableRootSelectionSet
+nonisolated public protocol KronorMerchant_MutableSelectionSet: ApolloAPI.MutableRootSelectionSet
 where Schema == KronorMerchant.SchemaMetadata {}
 
-public protocol KronorMerchant_MutableInlineFragment: ApolloAPI.MutableSelectionSet & ApolloAPI.InlineFragment
+nonisolated public protocol KronorMerchant_MutableInlineFragment: ApolloAPI.MutableSelectionSet & ApolloAPI.InlineFragment
 where Schema == KronorMerchant.SchemaMetadata {}
 
 public extension KronorMerchant {
@@ -24,20 +24,21 @@ public extension KronorMerchant {
 
   typealias MutableInlineFragment = KronorMerchant_MutableInlineFragment
 
-  enum SchemaMetadata: ApolloAPI.SchemaMetadata {
+  nonisolated enum SchemaMetadata: ApolloAPI.SchemaMetadata {
     public static let configuration: any ApolloAPI.SchemaConfiguration.Type = SchemaConfiguration.self
 
-    public static func objectType(forTypename typename: String) -> ApolloAPI.Object? {
-      switch typename {
-      case "PaymentSessionResult": return KronorMerchant.Objects.PaymentSessionResult
-      case "mutation_root": return KronorMerchant.Objects.Mutation_root
-      default: return nil
-      }
+    private static let objectTypeMap: [String: ApolloAPI.Object] = [
+      "PaymentSessionResult": KronorMerchant.Objects.PaymentSessionResult,
+      "mutation_root": KronorMerchant.Objects.Mutation_root
+    ]
+
+    @_spi(Execution) public static func objectType(forTypename typename: String) -> ApolloAPI.Object? {
+      objectTypeMap[typename]
     }
   }
 
-  enum Objects {}
-  enum Interfaces {}
-  enum Unions {}
+  nonisolated enum Objects {}
+  nonisolated enum Interfaces {}
+  nonisolated enum Unions {}
 
 }

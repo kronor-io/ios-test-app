@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension KronorMerchant.Objects {
   /// The result of starting a new payment session.
-  static let PaymentSessionResult = ApolloAPI.Object(
+  nonisolated static let PaymentSessionResult = ApolloAPI.Object(
     typename: "PaymentSessionResult",
     implementedInterfaces: [],
     keyFields: nil

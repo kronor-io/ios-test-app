@@ -1,1 +1,5 @@
 kronor-test-app.xcodeproj/xcuserdata/
+
+# Apple credentials — never commit
+apple.env
+*.p8

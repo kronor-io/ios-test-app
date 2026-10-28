@@ -1,20 +1,21 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import ApolloAPI
+@_spi(Internal) @_spi(Unsafe) import ApolloAPI
 
 public extension KronorMerchant {
   /// Arguments for creating a new payment session.
-  struct PaymentSessionInput: InputObject {
-    public private(set) var __data: InputDict
+  nonisolated struct PaymentSessionInput: InputObject {
+    @_spi(Unsafe) public private(set) var __data: InputDict
 
-    public init(_ data: InputDict) {
+    @_spi(Unsafe) public init(_ data: InputDict) {
       __data = data
     }
 
     public init(
       additionalData: GraphQLNullable<PaymentSessionAdditionalData> = nil,
-      amount: Int,
+      preferredGateway: GraphQLNullable<GraphQLEnum<GatewayEnum>> = nil,
+      amount: Int32,
       country: GraphQLNullable<GraphQLEnum<Country>> = nil,
       currency: GraphQLNullable<GraphQLEnum<SupportedCurrencyEnum>> = nil,
       expiresAt: String,
@@ -24,6 +25,7 @@ public extension KronorMerchant {
     ) {
       __data = InputDict([
         "additionalData": additionalData,
+        "preferredGateway": preferredGateway,
         "amount": amount,
         "country": country,
         "currency": currency,
@@ -40,9 +42,17 @@ public extension KronorMerchant {
       set { __data["additionalData"] = newValue }
     }
 
+    /// The preferred gateway to use for this payment session.
+    /// Only "KRONOR" is supported at the moment.
+    /// Leave empty if you don't know why you need this. Talk to us before using this.
+    public var preferredGateway: GraphQLNullable<GraphQLEnum<GatewayEnum>> {
+      get { __data["preferredGateway"] }
+      set { __data["preferredGateway"] = newValue }
+    }
+
     /// The amount the customer pays in minor units.
     /// So 100,56 kr would be 10056
-    public var amount: Int {
+    public var amount: Int32 {
       get { __data["amount"] }
       set { __data["amount"] = newValue }
     }

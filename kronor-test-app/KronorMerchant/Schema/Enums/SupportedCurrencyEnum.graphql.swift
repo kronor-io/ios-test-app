@@ -1,10 +1,10 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import ApolloAPI
+@_spi(Internal) import ApolloAPI
 
 public extension KronorMerchant {
-  enum SupportedCurrencyEnum: String, EnumType {
+  nonisolated enum SupportedCurrencyEnum: String, EnumType {
     /// Swiss Franc, the currency of Switzerland
     case chf = "CHF"
     /// Czech Koruna, the currency of the Czech Republic

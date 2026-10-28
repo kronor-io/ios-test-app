@@ -1,11 +1,11 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import ApolloAPI
+@_spi(Internal) import ApolloAPI
 
 public extension KronorMerchant {
   /// Supported languages
-  enum Language: String, EnumType {
+  nonisolated enum Language: String, EnumType {
     case cs = "CS"
     case da = "DA"
     case de = "DE"

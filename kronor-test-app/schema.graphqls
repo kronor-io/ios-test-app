@@ -9679,10 +9679,38 @@ input PaymentSessionAdditionalData {
   shippingAddress: AddressInput
 }
 
+"""Gateways that payments can be processed through"""
+enum GatewayEnum {
+  """Avarda"""
+  AVARDA
+
+  """Enable Banking"""
+  ENABLE_BANKING
+
+  """Finshark"""
+  FINSHARK
+
+  """Kronor"""
+  KRONOR
+
+  """Reepay"""
+  REEPAY
+
+  """Trustly"""
+  TRUSTLY
+}
+
 """Arguments for creating a new payment session."""
 input PaymentSessionInput {
   """Additional data about the customer attempting the payment."""
   additionalData: PaymentSessionAdditionalData
+
+  """
+  The preferred gateway to use for this payment session.
+  Only "KRONOR" is supported at the moment.
+  Leave empty if you don't know why you need this. Talk to us before using this.
+  """
+  preferredGateway: GatewayEnum
 
   """
   The amount the customer pays in minor units.

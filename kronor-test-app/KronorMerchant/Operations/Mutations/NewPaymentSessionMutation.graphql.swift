@@ -2,9 +2,10 @@
 // This file was automatically generated and should not be edited.
 
 @_exported import ApolloAPI
+@_spi(Execution) @_spi(Unsafe) import ApolloAPI
 
 public extension KronorMerchant {
-  class NewPaymentSessionMutation: GraphQLMutation {
+  nonisolated struct NewPaymentSessionMutation: GraphQLMutation {
     public static let operationName: String = "NewPaymentSession"
     public static let operationDocument: ApolloAPI.OperationDocument = .init(
       definition: .init(
@@ -17,15 +18,18 @@ public extension KronorMerchant {
       self.payment = payment
     }
 
-    public var __variables: Variables? { ["payment": payment] }
+    @_spi(Unsafe) public var __variables: Variables? { ["payment": payment] }
 
-    public struct Data: KronorMerchant.SelectionSet {
-      public let __data: DataDict
-      public init(_dataDict: DataDict) { __data = _dataDict }
+    nonisolated public struct Data: KronorMerchant.SelectionSet {
+      @_spi(Unsafe) public let __data: DataDict
+      @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-      public static var __parentType: any ApolloAPI.ParentType { KronorMerchant.Objects.Mutation_root }
-      public static var __selections: [ApolloAPI.Selection] { [
+      @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { KronorMerchant.Objects.Mutation_root }
+      @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
         .field("newPaymentSession", NewPaymentSession.self, arguments: ["payment": .variable("payment")]),
+      ] }
+      @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+        NewPaymentSessionMutation.Data.self
       ] }
 
       /// Create a new payment session to start a new stand alone payment. The token from the session can be used in subsequent calls for the payment flow.
@@ -34,14 +38,17 @@ public extension KronorMerchant {
       /// NewPaymentSession
       ///
       /// Parent Type: `PaymentSessionResult`
-      public struct NewPaymentSession: KronorMerchant.SelectionSet {
-        public let __data: DataDict
-        public init(_dataDict: DataDict) { __data = _dataDict }
+      nonisolated public struct NewPaymentSession: KronorMerchant.SelectionSet {
+        @_spi(Unsafe) public let __data: DataDict
+        @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-        public static var __parentType: any ApolloAPI.ParentType { KronorMerchant.Objects.PaymentSessionResult }
-        public static var __selections: [ApolloAPI.Selection] { [
+        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { KronorMerchant.Objects.PaymentSessionResult }
+        @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("token", String.self),
+        ] }
+        @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+          NewPaymentSessionMutation.Data.NewPaymentSession.self
         ] }
 
         /// Once a payment session is initialized, you can use this token to start the payment flow.
