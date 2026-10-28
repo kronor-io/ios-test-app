@@ -26,6 +26,7 @@ enum PaymentMethod: String, CaseIterable, Identifiable, Hashable {
     case paypal
     case bankTransfer
     case p24
+    case p24Blik
     case avarda
     case fallback
 
@@ -41,6 +42,7 @@ enum PaymentMethod: String, CaseIterable, Identifiable, Hashable {
         case .paypal: "PayPal"
         case .bankTransfer: "Bank Transfer"
         case .p24: "Przelewy24"
+        case .p24Blik: "Przelewy24 · BLIK"
         case .avarda: "Avarda"
         case .fallback: "Fallback"
         }
@@ -56,6 +58,7 @@ enum PaymentMethod: String, CaseIterable, Identifiable, Hashable {
         case .paypal: "PayPal checkout"
         case .bankTransfer: "Trustly bank transfer"
         case .p24: "Polish bank payments"
+        case .p24Blik: "Only BLIK, via channelOverride"
         case .avarda: "Direct invoice · needs the Kronor gateway"
         case .fallback: "Generic component, opens Swish"
         }
@@ -71,6 +74,7 @@ enum PaymentMethod: String, CaseIterable, Identifiable, Hashable {
         case .paypal: "p.circle"
         case .bankTransfer: "building.columns"
         case .p24: "banknote"
+        case .p24Blik: "number.square"
         case .avarda: "doc.text"
         case .fallback: "arrow.uturn.forward.circle"
         }
@@ -239,6 +243,12 @@ struct ContentView: View {
             TrustlyComponent(configuration: configuration(sessionToken: sessionToken), paymentResultHandler: handler)
         case .p24:
             P24Component(configuration: configuration(sessionToken: sessionToken), paymentResultHandler: handler)
+        case .p24Blik:
+            P24Component(
+                configuration: configuration(sessionToken: sessionToken),
+                channelOverride: .blik,
+                paymentResultHandler: handler
+            )
         case .fallback:
             FallbackComponent(
                 configuration: configuration(sessionToken: sessionToken),
