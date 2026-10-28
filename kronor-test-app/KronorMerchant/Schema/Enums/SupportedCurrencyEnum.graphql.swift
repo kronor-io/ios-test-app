@@ -13,6 +13,8 @@ public extension KronorMerchant {
     case dkk = "DKK"
     /// Euro, Currency for the states in Eurozone
     case eur = "EUR"
+    /// British Pound Sterling, the currency of the United Kingdom
+    case gbp = "GBP"
     /// Hungarian Forint, the currency of Hungary
     case huf = "HUF"
     /// Icelandic Krona, currency of Iceland
@@ -25,6 +27,8 @@ public extension KronorMerchant {
     case ron = "RON"
     /// Swedish Krona, currency of Sweden
     case sek = "SEK"
+    /// United States Dollar, the currency of the United States
+    case usd = "USD"
   }
 
 }

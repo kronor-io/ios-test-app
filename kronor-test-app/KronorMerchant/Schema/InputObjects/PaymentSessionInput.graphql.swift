@@ -14,25 +14,31 @@ public extension KronorMerchant {
 
     public init(
       additionalData: GraphQLNullable<PaymentSessionAdditionalData> = nil,
-      preferredGateway: GraphQLNullable<GraphQLEnum<GatewayEnum>> = nil,
+      allowExecutionDate: GraphQLNullable<Bool> = nil,
       amount: Int32,
       country: GraphQLNullable<GraphQLEnum<Country>> = nil,
       currency: GraphQLNullable<GraphQLEnum<SupportedCurrencyEnum>> = nil,
       expiresAt: String,
       idempotencyKey: String,
       merchantReference: String,
-      message: String
+      merchantReference2: GraphQLNullable<String> = nil,
+      message: String,
+      preferredGateway: GraphQLNullable<GraphQLEnum<GatewayEnum>> = nil,
+      saveCardDetails: GraphQLNullable<Bool> = nil
     ) {
       __data = InputDict([
         "additionalData": additionalData,
-        "preferredGateway": preferredGateway,
+        "allowExecutionDate": allowExecutionDate,
         "amount": amount,
         "country": country,
         "currency": currency,
         "expiresAt": expiresAt,
         "idempotencyKey": idempotencyKey,
         "merchantReference": merchantReference,
-        "message": message
+        "merchantReference2": merchantReference2,
+        "message": message,
+        "preferredGateway": preferredGateway,
+        "saveCardDetails": saveCardDetails
       ])
     }
 
@@ -42,12 +48,10 @@ public extension KronorMerchant {
       set { __data["additionalData"] = newValue }
     }
 
-    /// The preferred gateway to use for this payment session.
-    /// Only "KRONOR" is supported at the moment.
-    /// Leave empty if you don't know why you need this. Talk to us before using this.
-    public var preferredGateway: GraphQLNullable<GraphQLEnum<GatewayEnum>> {
-      get { __data["preferredGateway"] }
-      set { __data["preferredGateway"] = newValue }
+    /// Whether setting an execution date is allowed for payments in this session.
+    public var allowExecutionDate: GraphQLNullable<Bool> {
+      get { __data["allowExecutionDate"] }
+      set { __data["allowExecutionDate"] = newValue }
     }
 
     /// The amount the customer pays in minor units.
@@ -112,6 +116,16 @@ public extension KronorMerchant {
       set { __data["merchantReference"] = newValue }
     }
 
+    /// An additional merchant's reference that may help the
+    /// merchant in identifying this payment. These need not be
+    /// be unique. Can store any information.
+    ///
+    /// Max length: 1000.
+    public var merchantReference2: GraphQLNullable<String> {
+      get { __data["merchantReference2"] }
+      set { __data["merchantReference2"] = newValue }
+    }
+
     /// A message to show to the customer. It could be an order id or a reference.
     /// Only alphanumeric, Swedish characters, and the following are allowed:
     /// - ':'
@@ -130,6 +144,20 @@ public extension KronorMerchant {
     public var message: String {
       get { __data["message"] }
       set { __data["message"] = newValue }
+    }
+
+    /// The preferred gateway to use for this payment session.
+    /// Only "KRONOR" is supported at the moment.
+    /// Leave empty if you don't know why you need this. Talk to us before using this.
+    public var preferredGateway: GraphQLNullable<GraphQLEnum<GatewayEnum>> {
+      get { __data["preferredGateway"] }
+      set { __data["preferredGateway"] = newValue }
+    }
+
+    /// Whether to save card details with Kronor, is only useful when you want to set it to false to disable the option to save. Otherwise, the merchant config is what determines whether to save the card details to receive a token. Card details are only saved when the customer has given their consent to store them.
+    public var saveCardDetails: GraphQLNullable<Bool> {
+      get { __data["saveCardDetails"] }
+      set { __data["saveCardDetails"] = newValue }
     }
   }
 

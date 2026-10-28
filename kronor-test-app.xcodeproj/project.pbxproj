@@ -14,6 +14,7 @@
 		6468C8A92964765300080343 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6468C8A82964765300080343 /* Client.swift */; };
 		6468C8AB2964811900080343 /* StartSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6468C8AA2964811900080343 /* StartSession.swift */; };
 		7A1E0C012F10000000C0FFEE /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A1E0C002F10000000C0FFEE /* Theme.swift */; };
+		7A1E0C032F10000000C0FFEE /* SavedCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A1E0C022F10000000C0FFEE /* SavedCards.swift */; };
 		64AD68B02F03DDB3000C1E70 /* Kronor in Frameworks */ = {isa = PBXBuildFile; productRef = 64AD68AF2F03DDB3000C1E70 /* Kronor */; };
 		64AD68B22F03DDB6000C1E70 /* KronorApi in Frameworks */ = {isa = PBXBuildFile; productRef = 64AD68B12F03DDB6000C1E70 /* KronorApi */; };
 		64AD68B42F03DDB9000C1E70 /* KronorComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 64AD68B32F03DDB9000C1E70 /* KronorComponents */; };
@@ -32,6 +33,7 @@
 		6468C8A82964765300080343 /* Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
 		6468C8AA2964811900080343 /* StartSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartSession.swift; sourceTree = "<group>"; };
 		7A1E0C002F10000000C0FFEE /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		7A1E0C022F10000000C0FFEE /* SavedCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedCards.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 				6468C8A82964765300080343 /* Client.swift */,
 				6468C8AA2964811900080343 /* StartSession.swift */,
 				7A1E0C002F10000000C0FFEE /* Theme.swift */,
+				7A1E0C022F10000000C0FFEE /* SavedCards.swift */,
 			);
 			path = "kronor-test-app";
 			sourceTree = "<group>";
@@ -193,6 +196,7 @@
 				6468C8A92964765300080343 /* Client.swift in Sources */,
 				6468C8AB2964811900080343 /* StartSession.swift in Sources */,
 				7A1E0C012F10000000C0FFEE /* Theme.swift in Sources */,
+				7A1E0C032F10000000C0FFEE /* SavedCards.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,7 +324,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "kronor-test-app/kronor-test-app.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2026102801;
+				CURRENT_PROJECT_VERSION = 2026102802;
 				DEVELOPMENT_ASSET_PATHS = "\"kronor-test-app/Preview Content\"";
 				DEVELOPMENT_TEAM = YLWA2GZVK6;
 				ENABLE_PREVIEWS = YES;
@@ -337,7 +341,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.kronor.kronor-test-app-3";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -356,7 +360,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "kronor-test-app/kronor-test-app.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2026102801;
+				CURRENT_PROJECT_VERSION = 2026102802;
 				DEVELOPMENT_ASSET_PATHS = "\"kronor-test-app/Preview Content\"";
 				DEVELOPMENT_TEAM = YLWA2GZVK6;
 				ENABLE_PREVIEWS = YES;
@@ -373,7 +377,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.kronor.kronor-test-app-3";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

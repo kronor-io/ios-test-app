@@ -28,6 +28,7 @@ public extension KronorMerchant {
     public static let configuration: any ApolloAPI.SchemaConfiguration.Type = SchemaConfiguration.self
 
     private static let objectTypeMap: [String: ApolloAPI.Object] = [
+      "CustomerSessionResult": KronorMerchant.Objects.CustomerSessionResult,
       "PaymentSessionResult": KronorMerchant.Objects.PaymentSessionResult,
       "mutation_root": KronorMerchant.Objects.Mutation_root
     ]

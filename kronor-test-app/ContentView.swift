@@ -97,6 +97,9 @@ struct PaymentAttempt: Identifiable {
 struct ContentView: View {
     @State private var session: PaymentSessionInfo?
     @State private var method: PaymentMethod?
+    @State private var savedCards: SavedCardsComponent?
+    @ObservedObject private var auth = MerchantAuth.shared
+    @AppStorage(customerReferenceKey) private var customerReference = "ios-test-customer"
     @State private var attempts: [PaymentAttempt] = []
 
     var body: some View {
@@ -120,6 +123,10 @@ struct ContentView: View {
                     StartSession { session = $0 }
                 }
 
+                if auth.isLoggedIn {
+                    savedCardsSection
+                }
+
                 if attempts.count > 1 {
                     Section("Earlier payments") {
                         ForEach(attempts.dropFirst()) { attempt in
@@ -134,6 +141,9 @@ struct ContentView: View {
                     paymentScreen(method: method, session: session)
                 }
             }
+            .navigationDestination(item: $savedCards) { component in
+                SavedCardsScreen(component: component)
+            }
         }
     }
 
@@ -143,7 +153,13 @@ struct ContentView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(session.formattedAmount)
                         .font(.title.bold().monospacedDigit())
-                    Text("\(session.country.flag) \(session.country.name)" + (session.prefersKronorGateway ? " · Kronor gateway" : ""))
+                    Text(
+                        ["\(session.country.flag) \(session.country.name)",
+                         session.prefersKronorGateway ? "Kronor gateway" : nil,
+                         session.customerReference]
+                            .compactMap { $0 }
+                            .joined(separator: " · ")
+                    )
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }
@@ -162,26 +178,25 @@ struct ContentView: View {
                 Button {
                     self.method = method
                 } label: {
-                    HStack(spacing: 14) {
-                        Image(systemName: method.systemImage)
-                            .font(.title3)
-                            .foregroundStyle(Color.kronorCream)
-                            .frame(width: 40, height: 40)
-                            .background(Color.kronorGreen, in: RoundedRectangle(cornerRadius: 10, style: .continuous))
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(method.title)
-                                .foregroundStyle(.primary)
-                            Text(method.subtitle)
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                        }
-                        Spacer()
-                        Image(systemName: "chevron.right")
-                            .font(.footnote.weight(.semibold))
-                            .foregroundStyle(.tertiary)
-                    }
+                    MethodRow(title: method.title, subtitle: method.subtitle, systemImage: method.systemImage)
                 }
             }
+        }
+    }
+
+    @ViewBuilder private var savedCardsSection: some View {
+        Section {
+            ForEach(SavedCardsComponent.allCases) { component in
+                Button {
+                    savedCards = component
+                } label: {
+                    MethodRow(title: component.title, subtitle: component.subtitle, systemImage: component.systemImage)
+                }
+            }
+        } header: {
+            Text("Saved cards")
+        } footer: {
+            Text("Opens a customer session for \(customerReference) and shows the gateway's web component in a web view. Change the reference under Card on file.")
         }
     }
 
@@ -255,6 +270,33 @@ struct ContentView: View {
                 paymentMethodName: "swish",
                 paymentResultHandler: handler
             )
+        }
+    }
+}
+
+struct MethodRow: View {
+    let title: String
+    let subtitle: String
+    let systemImage: String
+
+    var body: some View {
+        HStack(spacing: 14) {
+            Image(systemName: systemImage)
+                .font(.title3)
+                .foregroundStyle(Color.kronorCream)
+                .frame(width: 40, height: 40)
+                .background(Color.kronorGreen, in: RoundedRectangle(cornerRadius: 10, style: .continuous))
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
+                    .foregroundStyle(.primary)
+                Text(subtitle)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            Spacer()
+            Image(systemName: "chevron.right")
+                .font(.footnote.weight(.semibold))
+                .foregroundStyle(.tertiary)
         }
     }
 }

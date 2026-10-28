@@ -4,7 +4,6 @@
 @_spi(Internal) import ApolloAPI
 
 public extension KronorMerchant {
-  /// Gateways that payments can be processed through
   nonisolated enum GatewayEnum: String, EnumType {
     /// Avarda
     case avarda = "AVARDA"

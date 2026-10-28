@@ -13,6 +13,7 @@ public extension KronorMerchant {
     }
 
     public init(
+      customerReference: GraphQLNullable<String> = nil,
       email: String,
       ip: String,
       language: GraphQLEnum<Language>,
@@ -22,6 +23,7 @@ public extension KronorMerchant {
       shippingAddress: GraphQLNullable<AddressInput> = nil
     ) {
       __data = InputDict([
+        "customerReference": customerReference,
         "email": email,
         "ip": ip,
         "language": language,
@@ -30,6 +32,12 @@ public extension KronorMerchant {
         "phoneNumber": phoneNumber,
         "shippingAddress": shippingAddress
       ])
+    }
+
+    /// Unique reference for your customer. When using card-on-file feature, customerReference must be sent.
+    public var customerReference: GraphQLNullable<String> {
+      get { __data["customerReference"] }
+      set { __data["customerReference"] = newValue }
     }
 
     /// The E-mail address of the customer.

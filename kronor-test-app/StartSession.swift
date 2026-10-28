@@ -16,6 +16,7 @@ struct PaymentSessionInfo {
     let currency: KronorMerchant.SupportedCurrencyEnum
     let country: KronorMerchant.Country
     let prefersKronorGateway: Bool
+    let customerReference: String?
 
     var formattedAmount: String { formatAmount(amount, currency) }
 }
@@ -70,6 +71,9 @@ struct StartSession: View {
     @AppStorage("startSession.country") private var country = KronorMerchant.Country.se
     @AppStorage("startSession.currency") private var currency = KronorMerchant.SupportedCurrencyEnum.sek
     @AppStorage("startSession.preferKronorGateway") private var preferKronorGateway = false
+    @AppStorage("startSession.useCustomerReference") private var useCustomerReference = false
+    @AppStorage("startSession.saveCardDetails") private var saveCardDetails = true
+    @AppStorage(customerReferenceKey) private var customerReference = "ios-test-customer"
     @State private var isCreating = false
     @State private var errorText: String?
 
@@ -129,6 +133,21 @@ struct StartSession: View {
             } else {
                 Text("Enter the amount in \(currency.rawValue), e.g. 300.56. The Kronor gateway is needed for Avarda.")
             }
+        }
+
+        Section {
+            Toggle("Customer reference", isOn: $useCustomerReference)
+            if useCustomerReference {
+                TextField("Customer reference", text: $customerReference)
+                    .textInputAutocapitalization(.never)
+                    .autocorrectionDisabled()
+                    .font(.body.monospaced())
+                Toggle("Offer to save the card", isOn: $saveCardDetails)
+            }
+        } header: {
+            Text("Card on file")
+        } footer: {
+            Text("Sends the reference as additionalData.customerReference, so Credit Card lists this customer's saved cards. The card selector needs the Kronor gateway. Turning off saving sends saveCardDetails: false.")
         }
 
         Section {
@@ -208,7 +227,9 @@ struct StartSession: View {
                 amount: amount,
                 currency: currency,
                 country: country,
-                preferredGateway: preferKronorGateway ? .kronor : nil
+                preferredGateway: preferKronorGateway ? .kronor : nil,
+                customerReference: useCustomerReference ? customerReference : nil,
+                saveCardDetails: saveCardDetails
             )
             switch result {
             case .failure(let apiError):
@@ -221,7 +242,8 @@ struct StartSession: View {
                     amount: amount,
                     currency: currency,
                     country: country,
-                    prefersKronorGateway: preferKronorGateway
+                    prefersKronorGateway: preferKronorGateway,
+                    customerReference: useCustomerReference ? customerReference : nil
                 ))
             }
         } catch let error as MerchantAuth.AuthError {
@@ -236,13 +258,16 @@ func createPaymentSession(
     amount: Int,
     currency: KronorMerchant.SupportedCurrencyEnum,
     country: KronorMerchant.Country,
-    preferredGateway: KronorMerchant.GatewayEnum? = nil
+    preferredGateway: KronorMerchant.GatewayEnum? = nil,
+    customerReference: String? = nil,
+    saveCardDetails: Bool = true
 ) async throws -> Result<String, APIError> {
     let expiry = Calendar.current.date(byAdding: .hour, value: 23, to: Date())!
     let idempotency = UUID().uuidString
 
     let input = KronorMerchant.PaymentSessionInput(
         additionalData: .some(KronorMerchant.PaymentSessionAdditionalData(
+            customerReference: customerReference.map { .some($0) } ?? .none,
             email: "fancy@icloud.com",
             ip: "127.0.0.1",
             language: GraphQLEnum(KronorMerchant.Language.sv),
@@ -280,14 +305,17 @@ func createPaymentSession(
                 streetAddress: "Peter Bangs Vej 23"
             ))
         )),
-        preferredGateway: preferredGateway.map { .some(GraphQLEnum.case($0)) } ?? .none,
         amount: Int32(amount),
         country: .some(GraphQLEnum.case(country)),
         currency: .some(GraphQLEnum.case(currency)),
         expiresAt: expiry.ISO8601Format(),
         idempotencyKey: idempotency,
         merchantReference: String("ios-\(Date().timeIntervalSinceReferenceDate)"),
-        message: "test payment"
+        message: "test payment",
+        preferredGateway: preferredGateway.map { .some(GraphQLEnum.case($0)) } ?? .none,
+        // Only sent with a customer reference: without one there is nothing
+        // to save a card against.
+        saveCardDetails: customerReference != nil ? .some(saveCardDetails) : .none
     )
 
     let client = try await makeGraphQLClientForTestMerchant()
