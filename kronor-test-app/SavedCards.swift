@@ -132,6 +132,10 @@ struct SavedCardsWebView: UIViewRepresentable {
         let webView = WKWebView(frame: .zero, configuration: WKWebViewConfiguration())
         // Debug it from Safari's Develop menu.
         webView.isInspectable = true
+        // The component's dialogs scroll inside their own panel. Without this,
+        // a swipe that reaches the panel's end carries on into the web view,
+        // which bounces the page behind the dialog instead.
+        webView.scrollView.bounces = false
         webView.loadHTMLString(html, baseURL: Self.gatewayURL)
         return webView
     }
@@ -152,6 +156,9 @@ struct SavedCardsWebView: UIViewRepresentable {
                  left the page zoomed and scrolled sideways after the 3DS OTP. -->
             <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
             <style>
+                /* Keeps scrolling inside the component's dialogs from chaining
+                   out to the page underneath them. */
+                html, body { overscroll-behavior: none; }
                 body { margin: 0; padding: 16px; font-family: -apple-system, sans-serif; background: #fff; }
                 #hint { font-size: 13px; color: #b00020; white-space: pre-wrap; }
             </style>
