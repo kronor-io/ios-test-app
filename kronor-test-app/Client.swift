@@ -132,6 +132,24 @@ final class MerchantAuth: NSObject, ObservableObject {
         isLoggedIn = false
     }
 
+    /// Who the stored token acts as, e.g. "Merchant 2 · someone@kronor.io",
+    /// read from its Hasura claims.
+    var accountSummary: String? {
+        guard let token = defaults.string(forKey: Keys.accessToken) else { return nil }
+        let segments = token.split(separator: ".")
+        guard segments.count == 3 else { return nil }
+        var payload = String(segments[1])
+            .replacingOccurrences(of: "-", with: "+")
+            .replacingOccurrences(of: "_", with: "/")
+        payload += String(repeating: "=", count: (4 - payload.count % 4) % 4)
+        guard let data = Data(base64Encoded: payload),
+              let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+              let claims = json["https://hasura.io/jwt/claims"] as? [String: Any]
+        else { return nil }
+        let merchant = (claims["x-hasura-merchant-id"] as? String).map { "Merchant \($0)" }
+        return [merchant, claims["x-hasura-user"] as? String].compactMap { $0 }.joined(separator: " · ")
+    }
+
     /// A usable access token, refreshed when it's within five minutes of expiring.
     func freshToken() async throws -> String {
         if let token = defaults.string(forKey: Keys.accessToken),
